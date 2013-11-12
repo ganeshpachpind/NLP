@@ -1,35 +1,33 @@
 /*
  * change path of file readFileString
- * also check path of model bin file 
+ * 
  */
 
 package opennlpdemo.test;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
 /**
  *
- * @author GAnesh Pachpind
+ * @author 396460
  */
 
-public class SentenceDetection
-{
-    public static void main(String args[])
-    {
-        sentencedemo();
-    }
-    
+public class SentenceDemo
+{   
     /**
     * Read File and extratct string of data from file
     * @author-Ganesh Pachpind    *
     * @param path- complete path of text file to read (no absolute path)
     * @return String ,text of data from file
     * */
+
   public static String readFileString(String path) throws IOException
     {
         StringBuilder sb = null;
@@ -60,22 +58,31 @@ public class SentenceDetection
         String sentences[] = null ;
         try
         {
-          String paragraph = readFileString("d:\\data\\eng.txt");
-          InputStream is = new FileInputStream(System.getProperty("user.dir")+"\\model\\en-sent.bin");
+          String paragraph = readFileString(Config.load().getProperty("readfile"));
+          InputStream is = new FileInputStream(Config.load().getProperty("modelpath")+"en-sent.bin");
           SentenceModel model = new SentenceModel(is);
 		  SentenceDetectorME sdetector = new SentenceDetectorME(model);
 		  sentences= sdetector.sentDetect(paragraph);
-          for(int i=0;i<sentences.length;i++)
-          {
-    	   System.out.println(sentences[i]);
-          }
+         //printsentence(sentences);
 		  is.close();
         }
         catch(IOException ex)
         {
-            System.out.println("Please check path of txt file also check path of bin file "+ex.toString());
+            System.out.println(ex.toString());
         }
         return sentences;
+    }
+
+    /**
+     * Use if need to print sentences
+     * @param sentences
+     */
+    public static void printsentence(String sentences[])
+    {
+         for(int i=0;i<sentences.length;i++)
+          {
+    	   System.out.println(sentences[i]);
+          }
     }
 
 }
