@@ -1,6 +1,6 @@
 /*
  * change path of file readFileString
- * 
+ * also check path of model bin file 
  */
 
 package opennlpdemo.test;
@@ -14,7 +14,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 
 /**
  *
- * @author 396460
+ * @author GAnesh Pachpind
  */
 
 public class SentenceDetection
@@ -23,6 +23,7 @@ public class SentenceDetection
     {
         sentencedemo();
     }
+    
     /**
     * Read File and extratct string of data from file
     * @author-Ganesh Pachpind    *
@@ -72,7 +73,7 @@ public class SentenceDetection
         }
         catch(IOException ex)
         {
-            System.out.println(ex.toString());
+            System.out.println("Please check path of txt file also check path of bin file "+ex.toString());
         }
         return sentences;
     }
