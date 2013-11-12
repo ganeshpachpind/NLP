@@ -16,7 +16,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 
 /**
  *
- * @author 396460
+ * @author Ganesh Pachpind
  */
 
 public class SentenceDemo
