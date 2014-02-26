@@ -55,7 +55,7 @@ public class TokenizerDemo
     
     /**
      * Use when need to print tokens 
-     * @param token
+     * @param token -- array of tokens
      */
        public static void printtokens(String token[])
        {
