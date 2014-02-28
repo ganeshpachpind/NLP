@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package MyClasses;
 
 import edu.stanford.nlp.ie.crf.CRFClassifier;
@@ -16,15 +10,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- *
- * @author 396460
+ * Standford Named Entity Demo
+ * @author Ganesh
  */
 public class StanfordNER 
 {
     /**
      * identify Name,organization location etc entities and return Map<List>
      * @param text
-     * @param model - Stanford model names out of the following any model
+     * @param model - Stanford model names out of the three models 
      * @return 
      */
     public static LinkedHashMap <String,LinkedHashSet<String>> identifyNER(String text,String model) 
@@ -32,8 +26,7 @@ public class StanfordNER
         LinkedHashMap <String,LinkedHashSet<String>> map=new <String,LinkedHashSet<String>>LinkedHashMap();
         try
         {
-         String serializedClassifier =Config.load().getProperty("modelpath")+model;      
-          //String serializedClassifier="D:\\data\\model\\english.conll.4class.distsim.crf.ser.gz";
+         String serializedClassifier ="D:\\data\\model\\english.conll.4class.distsim.crf.ser.gz";      
          System.out.println(serializedClassifier);
          CRFClassifier<CoreLabel> classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);
          List<List<CoreLabel>> classify = classifier.classify(text);
@@ -47,7 +40,8 @@ public class StanfordNER
                 if(!"O".equals(category))
                 {
                     if(map.containsKey(category))
-                    {   // key is already their just insert in arraylist                        
+                    {   
+                        // key is already their just insert in arraylist                        
                         map.get(category).add(word);
                     }
                     else
