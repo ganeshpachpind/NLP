@@ -1,10 +1,9 @@
-package MyClasses;
+package stanford;
 
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -17,21 +16,19 @@ public class StanfordNER
 {
     /**
      * identify Name,organization location etc entities and return Map<List>
-     * @param text
+     * @param text -- data 
      * @param model - Stanford model names out of the three models 
-     * @return 
+     * @return -- Map <String,ArrayList>
      */
     public static LinkedHashMap <String,LinkedHashSet<String>> identifyNER(String text,String model) 
     {    
         LinkedHashMap <String,LinkedHashSet<String>> map=new <String,LinkedHashSet<String>>LinkedHashMap();
-        try
+        String serializedClassifier =model;
+        System.out.println(serializedClassifier);
+        CRFClassifier<CoreLabel> classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);
+        List<List<CoreLabel>> classify = classifier.classify(text);
+        for (List<CoreLabel> coreLabels : classify)
         {
-         String serializedClassifier ="D:\\data\\model\\english.conll.4class.distsim.crf.ser.gz";      
-         System.out.println(serializedClassifier);
-         CRFClassifier<CoreLabel> classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);
-         List<List<CoreLabel>> classify = classifier.classify(text);
-         for (List<CoreLabel> coreLabels : classify) 
-         {
             for (CoreLabel coreLabel : coreLabels) 
             {
               
@@ -40,7 +37,7 @@ public class StanfordNER
                 if(!"O".equals(category))
                 {
                     if(map.containsKey(category))
-                    {   
+                    {
                         // key is already their just insert in arraylist                        
                         map.get(category).add(word);
                     }
@@ -55,11 +52,6 @@ public class StanfordNER
  
             }
             
-         }
-        }
-        catch(IOException ex)
-        {
-            System.out.println("Exception in StanfordNER:identifyNER():="+ex.toString());
         }
         return map;
     }
@@ -71,7 +63,7 @@ public class StanfordNER
                  + "      50,000 runs in all recognized cricket "
                  + "      First-class, List A and Twenty20 combined)";
         
-         System.out.println(identifyNER(content, "english.muc.7class.distsim.crf.ser.gz").toString());
+         System.out.println(identifyNER(content, "D:\\data\\model\\english.conll.4class.distsim.crf.ser.gz").toString());
     }
     
 }
